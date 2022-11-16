@@ -1,8 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
-function App() {
+export const App = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +21,10 @@ function App() {
       </header>
     </div>
   );
+
+  // return (
+  //   fetch('https://dummyjson.com/RESOURCE/?limit=10&skip=5&select=key1,key2,key3')
+  // );
 }
 
-export default App;
+// export default App;
