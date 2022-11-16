@@ -1,30 +1,45 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
+// import logo from "./logo.svg";
 import "./App.css";
 
-export const App = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const App = (props: any) => {
+  const [data, setData] = useState([]]);
+  const URL = "https://dummyjson.com/products/categories";
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    // for (let i = 0; i < )
+    // data.datas.map(item => ())
+    const response = await fetch(`https://dummyjson.com/products/categories`);
+    const newData = await response.json();
+    setData(newData);
+    console.log(newData);
+  };
 
   // return (
-  //   fetch('https://dummyjson.com/RESOURCE/?limit=10&skip=5&select=key1,key2,key3')
+  //   <div>
+  //     {datas.map((data, index) => {
+  //       return (
+  //         <div key={index}>
+  //           <h2>id: {data.products}</h2>
+  //         </div>
+  //       );
+  //     })}
+  //   </div>
   // );
-}
+  return null;
+  // return (
+  //   <ul>
+  //     {data.datas.map(item => (
+  //       <li key={item.id}>
+  //         <a href={item.url}>{item.title}</a>
+  //       </li>
+  //     ))}
+  //   </ul>
+  // );
+};
 
 // export default App;
