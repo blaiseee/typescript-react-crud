@@ -3,18 +3,10 @@ export const WriteOnlyRow = () => {
     <tr>
       <td>
         <input
-          type="number"
-          // required="required"
-          placeholder="Enter id"
-          name="id"
-        ></input>
-      </td>
-      <td>
-        <input
           type="text"
           // required="required"
-          placeholder="Enter first name"
-          name="firstName"
+          placeholder="Enter full name"
+          name="fullName"
         ></input>
       </td>
       <td>

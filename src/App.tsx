@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./App.css";
-import { Products } from "./interfaces/products.interface";
-import { AddData, GetData } from "./DataProperties";
 import { Users } from "./interfaces/users.interface";
 import { RowReadOnly } from "./helper/ReadOnlyRow";
 import { WriteOnlyRow } from "./helper/WriteOnlyRow";
+import { nanoid } from "nanoid";
+import data from "./data.json";
 
 export const App = () => {
   // Products
@@ -13,46 +13,46 @@ export const App = () => {
   // const [removeData, setRemoveData] = useState<Products[]>([]);
 
   // Users
-  const [userData, setUserData] = useState<Users[]>([]);
-  const [addUserData, setAddUserData] = useState<Users[]>([]);
+  let [contactData, setContactData] = useState(data);
+  const [addContactData, setAddContactData] = useState({
+    fullName: "",
+    address: "",
+    phoneNumber: "",
+    email: "",
+  });
 
-  useEffect(() => {
-    const startFetching = async () => {
-      const result = await GetData();
-      if (!ignore) setUserData(result);
-    };
+  // useEffect(() => {
+  // const startFetching = async () => {
+  //   const result = await GetData();
+  //   if (!ignore) setUserData(result);
+  // };
 
-    // const addData = async () => {
-    //   const newResult = await AddData();
-    //   // if (!ignore) setProdDataValue(newResult);
-    // };
+  // let ignore = false;
+  // startFetching();
+  // return () => {
+  //   ignore = true;
+  // };
+  // }, []);
 
-    let ignore = false;
-    startFetching();
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
-  const handleAddUserChange = (event: any) => {
+  const handleChange = (event: any) => {
     event.preventDefault();
 
-    const dataName = event.target.getAttribute("name");
+    const dataField = event.target.getAttribute("name");
     const dataValue = event.target.value;
-    const newData = { ...addUserData };
-    newData[dataName] = dataValue;
+    const newContactData: any = { ...addContactData };
+    newContactData[dataField] = dataValue;
 
-    setAddUserData(newData);
+    console.log(newContactData);
+    setAddContactData(newContactData);
   };
 
-  const handleAddUserSubmit = (event: any) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
-    const newUserData = {
-      // id: addUserData.id,
-      // firstName: addUserData.firstName,
 
-    }
-  }
+    const newContact = {
+      fullName: addContactData.fullName,
+    };
+  };
 
   // const removeDataHandler = (event: number) => {
   //   const removeDataId = event.target.getAttribute("data-remove");
@@ -63,59 +63,19 @@ export const App = () => {
 
   return (
     <div>
-      {/* <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Discount Percentage</th>
-            <th>Rating</th>
-            <th>Stock</th>
-            <th>Brand</th>
-            <th>Category</th>
-            <th>Thumbnail</th>
-          </tr>
-        </thead>
-        <tbody>
-          {prodData.map((data, i) => (
-            <tr key={i}>
-              <td>
-                <button onClick={removeDataHandler} data-remove={data.id}>X</button>
-                {data.id}
-              </td>
-              <td>{data.title}</td>
-              <td>{data.description}</td>
-              <td>{data.price}</td>
-              <td>{data.discountPercentage}</td>
-              <td>{data.rating}</td>
-              <td>{data.stock}</td>
-              <td>{data.brand}</td>
-              <td>{data.category}</td>
-              <td>
-                <img src={data.thumbnail} height="100" width="100" />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-
       <form>
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Age</th>
-              <th>Gender</th>
+              <th>Full Name</th>
+              <th>Address</th>
+              <th>Phone Number</th>
               <th>Email</th>
-              <th>Phone</th>
             </tr>
           </thead>
           <tbody>
-            {userData.map((data, i) => (
+            {contactData.map((data, i) => (
               // <Fragment>
               // <WriteOnlyRow />
               <RowReadOnly key={i} user={data}></RowReadOnly>
@@ -126,48 +86,35 @@ export const App = () => {
       </form>
 
       <h2>Add Contact</h2>
+      {/* <form onSubmit={handleSubmit}> */}
       <form>
         <input
-          type="number"
+          type="text"
           // required="required"
-          placeholder="Enter id"
-          name="id"
+          placeholder="Enter full name"
+          name="fullName"
+          onChange={handleChange}
         ></input>
         <input
           type="text"
           // required="required"
-          placeholder="Enter first name"
-          name="firstName"
+          placeholder="Enter address"
+          name="address"
+          onChange={handleChange}
         ></input>
         <input
           type="text"
           // required="required"
-          placeholder="Enter last name"
-          name="lastName"
-        ></input>
-        <input
-          type="number"
-          // required="required"
-          placeholder="Enter age"
-          name="age"
-        ></input>
-        <input
-          type="text"
-          // required="required"
-          placeholder="Enter gender"
-          name="gender"
+          placeholder="Enter phone number"
+          name="phone"
+          onChange={handleChange}
         ></input>
         <input
           type="email"
           // required="required"
           placeholder="Enter email"
           name="email"
-        ></input>
-        <input
-          type="text"
-          // required="required"
-          placeholder="Enter contact number"
-          name="phone"
+          onChange={handleChange}
         ></input>
         <button type="submit">Add</button>
       </form>
